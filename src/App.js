@@ -8,12 +8,12 @@ import { AnimatePresence } from "framer-motion";
 function App() {
   return (
     <AnimatePresence>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <div className="app">
           <Header />
           <Content />
           <Footer />
-        </div>
+          </div>
       </BrowserRouter>
     </AnimatePresence>
   );
