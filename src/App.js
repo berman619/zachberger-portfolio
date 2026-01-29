@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Content from './pages/Content';
 import Footer from './components/Footer';
 import { AnimatePresence } from "framer-motion";
+import './index.css';
 
 function App() {
   return (

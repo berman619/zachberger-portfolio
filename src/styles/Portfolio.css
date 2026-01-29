@@ -1,135 +1,74 @@
 .introduction {
-    text-align: center;
-    padding: 50px; 
-    margin-bottom: 50px;
-    background: #f9f9f9;
+  text-align: center;
+  padding: 50px;
+  margin-bottom: 32px;
+  background: #f9f9f9;
 }
 
-.introduction h1 {
-    font-size: 2.5em; 
-    color: #333; 
-    margin-bottom: 20px;
+.introduction h2 {
+  font-size: 2.2em;
+  color: #333;
+  margin-bottom: 14px;
 }
 
 .introduction p {
-    font-size: 1.2em;
-    color: #666;
-    max-width: 800px;
-    margin: 0 auto;
+  font-size: 1.1em;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
+/* Featured grid: BIG cards, 2 columns on desktop */
+.featured-grid {
+  width: min(1200px, 100%);
+  margin: 0 auto 56px;
+  padding: 0 24px;
 
-.portfolio-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
 }
 
-.project-card {
-    display: flex;         
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    position: relative;
+@media (max-width: 980px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.image-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 90%;
-    height: 100%; 
-    margin: auto;
+/* Tech projects container */
+.tech-projects {
+  width: min(1200px, 100%);
+  margin: 0 auto 72px;
+  padding: 0 24px;
 }
 
-.project-card img {
-    width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
+.tech-projects summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin: 8px 0 14px;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    transition: .5s ease;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    color: white;
-}
-
-.overlay h3 {
-    margin-bottom: 20px;
-}
-
-.overlay p {
-    margin-bottom: 30px;
-}
-
-.links a {
-    color: white;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
-
-.links a:hover {
-    color: #007EA7;
-}
-
-.image-container:hover .overlay {
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
-    .project-card {
-        width: 100%;
-    }
-}
-
-@media (min-width: 769px) {
-    .project-card {
-        width: 70%;
-    }
+.tech-projects summary:hover {
+  text-decoration: underline;
 }
 
 .carousel-container {
-    width: 70%;
-    margin: 50px auto;
+  width: 100%;
+  margin: 18px auto 0;
 }
 
-.carousel .control-arrow:before {
-    color: #000;
+/* Scope carousel slide background so it doesn't affect featured cards */
+.tech-projects .carousel .slide {
+  background: linear-gradient(45deg, #020024 0%, #090979 37%, #00d4ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.carousel .slide {
-    background: linear-gradient(45deg, #020024 0%, #090979 37%, #00d4ff 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.carousel .slide > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.carousel .slide img {
-    margin: 0 auto; 
+.tech-projects .carousel .slide > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

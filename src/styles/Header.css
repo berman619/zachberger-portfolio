@@ -9,8 +9,17 @@
     align-items: center;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    transition: background-color 1s ease; /* Smooth transition for background color */
 }
 
 .header h1 {
     color: #FFFFFF;
+    font-family: 'Borel', cursive;
+    padding: 10px 5px 0px; /* Adjust as needed */
+    line-height: normal; /* Adjust as needed */
+}
+
+.header.scrolled {
+    background-color: #002840; /* A darker shade when scrolled */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3); /* Increased shadow depth */
 }

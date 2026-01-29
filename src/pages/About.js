@@ -1,32 +1,126 @@
-// Contains a recent photo/avatar and a short bio.
-
 import React from 'react';
 import '../styles/About.css';
-import { motion } from "framer-motion";
+import { motion, useAnimation, useReducedMotion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+
+function Section({ title, content, image, reverse = false }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const { inView, ref } = useInView({
+    threshold: 0.15,
+    triggerOnce: true, // animate once instead of every time it scrolls in/out
+  });
+
+  const animation = useAnimation();
+
+  // Safe window width (won't crash if this ever renders in a non-browser environment)
+  const [windowWidth, setWindowWidth] = React.useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1024
+  );
+
+  React.useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Start animations when section enters viewport
+  React.useEffect(() => {
+    if (!inView) return;
+
+    animation.start({
+      opacity: 1,
+      x: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.8, ease: 'easeOut' },
+    });
+  }, [inView, animation, shouldReduceMotion]);
+
+  // Apply reverse only on desktop-ish widths
+  const applyReverse = reverse && windowWidth > 768;
+
+  return (
+    <div ref={ref} className={`about-section${applyReverse ? ' reverse' : ''}`}>
+      <motion.div
+        animate={animation}
+        initial={{ opacity: 0, x: shouldReduceMotion ? 0 : (applyReverse ? 80 : -80) }}
+      >
+        <div className="title-background">
+          <h2 style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>{title}</h2>
+        </div>
+
+        <p>{content}</p>
+      </motion.div>
+
+      <motion.img
+        src={image}
+        alt={title}
+        animate={animation}
+        initial={{ opacity: 0, x: shouldReduceMotion ? 0 : (applyReverse ? -80 : 80) }}
+        transition={{ delay: shouldReduceMotion ? 0 : 0.15 }}
+      />
+    </div>
+  );
+}
 
 function About() {
-    return (
-        <motion.div
+  const sections = [
+    {
+      title: 'What I do',
+      content:
+        "I’m a senior social media and digital marketing strategist based in New York. I build content systems that grow audiences, protect brands in fast-moving moments, and translate performance into clear business outcomes. I’m currently targeting part-time, remote work (roughly 10–20 hours/week).",
+      image: process.env.PUBLIC_URL + '/images/image1.jpg',
+    },
+    {
+      title: 'Experience',
+      content:
+        "I’ve led social and digital work across agencies and startups, including MikeWorldWide (MWW), HangarFour/DKC, Praytell, and Snickerdoodle Labs. Past clients include DoorDash, Norton 360 for Gamers, NYU Langone Health, and Dr. Seuss Enterprises.",
+      image: process.env.PUBLIC_URL + '/images/image2.jpg',
+      reverse: true,
+    },
+    {
+      title: 'How I work',
+      content:
+        'I’m strongest where strategy meets execution: building calendars and templates, writing sharp copy, managing communities, monitoring sentiment, and producing reporting that stakeholders can actually use. I’m also comfortable with rapid-response/corrective comms, account security basics, and accessibility best practices.',
+      image: process.env.PUBLIC_URL + '/images/image3.jpg',
+    },
+    {
+      title: 'Recent work',
+      content:
+        "Most recently, I built the website for Silver Thread Behavioral Health (a therapy practice), including information architecture, conversion-minded copy, basic on-page SEO, accessibility fundamentals, and mobile QA. I also support small businesses with practical content and promotion that drives real-world results.",
+      image: process.env.PUBLIC_URL + '/images/image4.jpg',
+      reverse: true,
+    },
+    {
+      title: 'What I’m looking for',
+      content:
+        'A part-time, remote role where I can own social media and digital communications for a single organization—content strategy, publishing operations, community management, and reporting. I’m also open to limited consulting engagements with a similar scope.',
+      image: process.env.PUBLIC_URL + '/images/image5.jpg',
+    },
+  ];
+
+  return (
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}>
-        <div className="about-section">
-        <img src={process.env.PUBLIC_URL + "/images/49DDF4C8-149B-4571-B1AB-905CF893587C.JPG"} alt="Zach Berger" />
-            <p>
-            I'm Zach Berger, a full stack web developer from New York, NY. Passionate about technology and driven by curiosity, I pursued web development to understand the underlying technology behind websites and build robust web applications.
-            <br></br><br></br>
-            Proficient in HTML, CSS, JavaScript, SQL, React, and more, I possess a solid foundation in both front-end and back-end development. During my time at the Columbia Coding Boot Camp, I collaborated on projects like "Popcorn Portal," a movie discovery app, and "StellarWatch," an astronomy event tracker.
-            <br></br><br></br>
-            As a creative thinker and quick learner, I'm adept at problem-solving and working both independently and in teams. With a background in social media and digital marketing, I bring a unique perspective to my work. Additionally, my skills in photography, Photoshop, and Lightroom enhance my creativity in web design.
-            <br></br><br></br>    
-            I approach challenges by understanding the problem, breaking it down into manageable parts, exploring multiple solutions, and seeking help when needed. With a thirst for knowledge and a passion for continuous learning, I stay up-to-date with industry trends and best practices.
-            <br></br><br></br>
-            I'm excited to embark on this new career path as a full stack web developer, leveraging my skills and experiences to create innovative web applications. Let's build something amazing together!
-            </p>
-        </div>
-        </motion.div>
-    );
+      transition={{ duration: 0.8 }}
+    >
+      <div className="about-container">
+        {sections.map((section, index) => (
+          <Section
+            key={index}
+            title={section.title}
+            content={section.content}
+            image={section.image}
+            // Use explicit reverse when provided; otherwise alternate by index
+            reverse={typeof section.reverse === 'boolean' ? section.reverse : index % 2 !== 0}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
 }
 
 export default About;

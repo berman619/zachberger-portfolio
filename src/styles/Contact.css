@@ -7,6 +7,8 @@
     background-color: #b4bee1;
     border-radius: 10px;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.06);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 #contactForm label {
@@ -52,4 +54,37 @@
 .error-text {
     color: #f00;
     margin-top: 10px;
+}
+
+.success-message {
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 400px;
+    border: 2px solid #4caf50;
+    background-color: #f0f4f5;
+    color: #4caf50;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+  
+  .introduction {
+    text-align: center;
+    padding: 50px; 
+    margin-bottom: 50px;
+    margin-top: 20px;
+    background: #f9f9f9;
+}
+
+.introduction h1 {
+    font-size: 2.5em; 
+    color: #333; 
+    margin-bottom: 20px;
+}
+
+.introduction p {
+    font-size: 1.2em;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
 }

@@ -9,8 +9,9 @@ function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleFormSubmit = event => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     if (!name || !email || !message) {
@@ -24,10 +25,34 @@ function Contact() {
       return;
     }
 
-    setName("");
-    setEmail("");
-    setMessage("");
-    setErrorMessage("");
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('message', message);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xpzgpwey", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ name, email, message }),
+        redirect: 'manual'
+      });
+    
+      if (response.ok) {
+        setName("");
+        setEmail("");
+        setMessage("");
+        setFormSubmitted(true);
+      } else {
+        setErrorMessage("An error occurred while sending your message. Please try again later.");
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred while sending your message. Please try again later.");
+      console.error(error);
+    }
   };
 
   return (
@@ -36,9 +61,24 @@ function Contact() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}>
-    <div className="container">
-    <form id="contactForm" onSubmit={handleFormSubmit}>
+      transition={{ duration: 1 }}
+    >
+      <div className="introduction">
+                <h2>Contact me!</h2>
+                <p>Fill out the form below and I'll get back you ASAP.</p>
+            </div>
+      <div className="container">
+        {formSubmitted ? (
+          <motion.div
+            className="success-message"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            Thank you for contacting me! I'll get back to you as soon as possible.
+          </motion.div>
+        ) : (
+          <form id="contactForm" onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input
@@ -72,9 +112,10 @@ function Contact() {
         {errorMessage && <p className="error-text">{errorMessage}</p>}
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
+      )}
     </div>
-    </motion.div>
-  );
+  </motion.div>
+);
 }
 
 export default Contact;
