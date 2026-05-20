@@ -69,7 +69,7 @@ function About() {
     {
       title: 'What I do',
       content:
-        "I’m a senior social media and digital marketing strategist based in New York. I build content systems that grow audiences, protect brands in fast-moving moments, and translate performance into clear business outcomes. I’m currently targeting part-time, remote work (roughly 10–20 hours/week).",
+        "I’m a senior social media and digital marketing strategist based in New York. I build content systems that grow audiences, protect brands in fast-moving moments, and translate performance into clear business outcomes. I’m currently targeting part-time work.",
       image: process.env.PUBLIC_URL + '/images/image1.jpg',
     },
     {

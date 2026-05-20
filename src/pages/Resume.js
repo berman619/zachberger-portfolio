@@ -17,7 +17,7 @@ import {
 
 function Resume() {
   // Update this path to match whatever you put in /public/files
-  const resumePdfPath = "/files/Zach Berger Resume_2026.pdf";
+  const resumePdfPath = "/files/Zach Berger Resume.pdf";
 
   const capabilitySections = [
     {
