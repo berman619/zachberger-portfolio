@@ -50,14 +50,25 @@
 @media screen and (max-width: 768px) {
   .about-section {
     flex-direction: column;
+    width: 90%;
+  }
+
+  .about-section.reverse {
+    flex-direction: column;
   }
 
   .about-section.reverse img {
-    order: 2; /* Ensures the reverse images are positioned correctly */
+    order: 2;
   }
 
-  .about-section img, .about-section .content {
+  .about-section img,
+  .about-section .content {
     width: 100%;
+  }
+
+  .about-section img {
+    min-width: 0;
+    margin: 20px 0;
   }
 }
 
